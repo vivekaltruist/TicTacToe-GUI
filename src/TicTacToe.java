@@ -155,7 +155,7 @@ public class TicTacToe extends JFrame {
 		
 		if(gameOver){
 			try {
-				MakeSound.makeSound("src/gong.au");
+				new MakeSound().makeSound("gong.au");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
