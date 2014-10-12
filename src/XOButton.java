@@ -8,7 +8,8 @@ public class XOButton extends JButton implements ActionListener {
 
 	private ImageIcon X, O;
 	private Cell value = Cell.Blank;
-	private int xID,yID;
+	private int xID, yID;
+
 	public XOButton(int x, int y) {
 		X = new ImageIcon(this.getClass().getResource("X.png"));
 		O = new ImageIcon(this.getClass().getResource("O.png"));
@@ -19,41 +20,50 @@ public class XOButton extends JButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (TicTacToe.gameOver == false && TicTacToe.counter >= 9)
-			TicTacToe.msg.setText("Game Draw");
-		else {
 
-			if (TicTacToe.gameOver == false) {
+		if (TicTacToe.gameOver == false) {
 
-				if (TicTacToe.counter % 2 == 1)
+			if (TicTacToe.counter % 2 == 0) {
+				if (TicTacToe.gamemode == Gamemode.HumanvsHuman)
 					TicTacToe.msg.setText("Player 2 Turn");
-				else
-					TicTacToe.msg.setText("Player 1 Turn");
+				else {
+					TicTacToe.msg.setText("Computer Turn");
 
-				if (value == Cell.Blank) {
-					TicTacToe.counter++;
-					value = TicTacToe.turn;
-					TicTacToe.clickedX = this.xID;
-					TicTacToe.clickedY = this.yID;
-					if (value == Cell.Cross) {
-						setIcon(X);
-						//TODO
-						TicTacToe.checkLines();
-						TicTacToe.turn = Cell.Circle;
-					} else {
-						setIcon(O);
-						//TODO
-						TicTacToe.checkLines();
-						TicTacToe.turn = Cell.Cross;
-					}
+				}
+			} else
+				TicTacToe.msg.setText("Player 1 Turn");
+
+			if (value == Cell.Blank) {
+				TicTacToe.counter++;
+				value = TicTacToe.turn;
+				TicTacToe.clickedX = this.xID;
+				TicTacToe.clickedY = this.yID;
+				if (value == Cell.Cross) {
+					setIcon(X);
+					// TODO
+					TicTacToe.checkLines();
+					TicTacToe.turn = Cell.Circle;
+				} else {
+					setIcon(O);
+					// TODO
+					TicTacToe.checkLines();
+					TicTacToe.turn = Cell.Cross;
 				}
 			}
+
 		}
 
+		if (!TicTacToe.gameOver && TicTacToe.turn == Cell.Circle
+				&& TicTacToe.gamemode == Gamemode.HumanvsComputer)
+			TicTacToe.computerTurn();
+
 	}
-	
-	public Cell getValue(){
+
+	public void setValue(Cell value) {
+		this.value = value;
+	}
+
+	public Cell getValue() {
 		return value;
 	}
 }
